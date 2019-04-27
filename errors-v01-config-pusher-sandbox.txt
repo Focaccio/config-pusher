@@ -1,0 +1,37 @@
+>>> net_connect = ConnectHandler(**dso_raw_r1)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+NameError: name 'dso_raw_r1' is not defined
+>>> dso_raw_r1 = {
+...     'device_type': 'cisco_ios',
+...     'host': '128.11.0.201',
+...     'username': 'lab',
+...     'password': 'lab',
+... }
+>>> 
+>>> net_connect = ConnectHandler(**dso_raw_r1)
+>>> net_connect.enable()
+''
+>>> net_connect.config_mode()
+'config term\r\nEnter configuration commands, one per line.  End with CNTL/Z.\r\nlab_r1_automated(config)#'
+>>> f=open("test_cfg1.txt","r")
+>>> config_commands=f.readlines()
+>>> net_connect.send_config_set(config_commands)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "/usr/local/lib/python3.5/dist-packages/netmiko/base_connection.py", line 1431, in send_config_set
+    self.write_channel(self.normalize_cmd(cmd))
+  File "/usr/local/lib/python3.5/dist-packages/netmiko/base_connection.py", line 360, in write_channel
+    self._write_channel(out_data)
+  File "/usr/local/lib/python3.5/dist-packages/netmiko/base_connection.py", line 331, in _write_channel
+    self.remote_conn.sendall(write_bytes(out_data, encoding=self.encoding))
+  File "/usr/local/lib/python3.5/dist-packages/paramiko/channel.py", line 846, in sendall
+    sent = self.send(s)
+  File "/usr/local/lib/python3.5/dist-packages/paramiko/channel.py", line 801, in send
+    return self._send(s, m)
+  File "/usr/local/lib/python3.5/dist-packages/paramiko/channel.py", line 1181, in _send
+    size = self._wait_for_send_window(size)
+  File "/usr/local/lib/python3.5/dist-packages/paramiko/channel.py", line 1304, in _wait_for_send_window
+    raise socket.timeout()
+socket.timeout
+>>> 
