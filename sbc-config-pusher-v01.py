@@ -4,8 +4,8 @@
 #WHAT: py3 ||
 #TYPE: sbc || sandbox code [sbc|rfc-grade-a-aaa|pxc]
 #NSE: 20190427:20190427:tbd || (now:start:end)
-#AGG: greg-focaccio || (https://twitter.com/3bx)
-#SDS: piyush-shewkani
+#AGG: focaccio_greg || (https://twitter.com/3bx)
+#SDS: shewkani_piyush
 #
 #
 #
