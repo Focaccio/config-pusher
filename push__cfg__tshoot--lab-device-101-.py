@@ -19,14 +19,14 @@ from subprocess import call
 from netmiko import ConnectHandler
 #
 #string ops
-dso_raw_testcfg = open("test_cfg1.txt","r")
+dso_raw_testcfg = open("lab-device-101__cfg__tshoot.txt","r")
 dso_str_testcfg = dso_raw_testcfg.read()
 print(dso_str_testcfg)
 #
 #data storage objects
 dso_raw_r1 = {
     'device_type': 'cisco_ios',
-    'host': '128.11.0.201',
+    'host': '128.11.0.101',
     'username': 'lab',
     'password': 'lab',
 }
@@ -38,7 +38,7 @@ net_connect.enable()
 net_connect.config_mode()
 #
 #read config .txt file into f
-f=open("test_cfg1.txt","r")
+f=open("lab-device-101__cfg__tshoot.txt","r")
 #
 #make it work...
 config_commands=f.readlines()
