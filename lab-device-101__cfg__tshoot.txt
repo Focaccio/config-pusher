@@ -1,0 +1,245 @@
+!filename:
+!lab-device-101__cfg__tshoot.txt
+!v0
+!
+!
+!
+!
+hostname _lab_r_101
+!
+boot-start-marker
+boot-end-marker
+!
+!
+no aaa new-model
+!
+resource policy
+!
+no network-clock-participate slot 1 
+no network-clock-participate wic 0 
+ip cef
+!
+!
+!
+!
+ip ftp source-interface FastEthernet0/1
+ip ftp username lab
+ip ftp password lab
+ip tftp source-interface FastEthernet0/0.102
+no ip domain lookup
+ip domain name f1.areaf.net
+ip ssh source-interface FastEthernet0/0.1001
+ip ssh logging events
+ip ssh version 2
+ip scp server enable
+ipv6 unicast-routing
+!
+!         
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+username lab privilege 15 password 0 lab
+!
+! 
+!
+!
+!
+!
+!
+interface Loopback0
+ description loop0
+ no ip address
+!
+interface Loopback6
+ no ip address
+!
+interface Loopback80
+ description web site
+ ip address 209.65.200.241 255.255.255.248
+!         
+interface Loopback86
+ description test ipv6 net
+ no ip address
+ ipv6 address FE80::8 link-local
+ ipv6 address 8::8/112
+ ipv6 address 3333:FFFF:DC1::1/48
+!
+interface FastEthernet0/0
+ no ip address
+ duplex auto
+ speed auto
+!
+interface FastEthernet0/0.101
+ encapsulation dot1Q 101
+ ip address 8.1.0.1 255.255.255.0
+!
+interface FastEthernet0/0.102
+ encapsulation dot1Q 102
+!
+interface FastEthernet0/0.1001
+ description rockhead
+ encapsulation dot1Q 1001
+ ip address 128.11.0.101 255.255.255.0
+!
+interface Serial0/0
+ description edge xconn
+ ip address 209.65.200.226 255.255.255.252
+ ipv6 address FE80:FFFF:DCDC:0:EBAF:0:12:1 link-local
+ ipv6 address 3333:FFFF:DCDC:0:EBAF:0:12:1/112
+ no fair-queue
+!
+interface FastEthernet0/1
+ no ip address
+ duplex auto
+ speed auto
+!
+interface FastEthernet0/1.111
+ description core ET
+ encapsulation dot1Q 111
+ shutdown
+!
+interface Serial0/1
+ description 1st WAN for remote1
+ no ip address
+!
+router ospf 1
+ log-adjacency-changes
+ network 1.11.0.0 0.0.0.255 area 1
+ network 10.12.0.0 0.0.0.255 area 0
+ network 10.123.0.0 0.0.0.255 area 0
+ network 101.0.0.0 0.0.0.255 area 0
+!
+router bgp 65002
+ bgp log-neighbor-changes
+ neighbor 3333:FFFF:DCDC:0:EBAF:0:12:2 remote-as 65001
+ neighbor 209.65.200.225 remote-as 65001
+ !
+ address-family ipv4
+ redistribute connected metric 500000
+ no neighbor 3333:FFFF:DCDC:0:EBAF:0:12:2 activate
+ neighbor 209.65.200.225 activate
+ neighbor 209.65.200.225 soft-reconfiguration inbound
+ no auto-summary
+ no synchronization
+ network 209.65.200.0
+ exit-address-family
+ !
+ address-family ipv6
+ neighbor 3333:FFFF:DCDC:0:EBAF:0:12:2 activate
+ neighbor 3333:FFFF:DCDC:0:EBAF:0:12:2 soft-reconfiguration inbound
+ redistribute connected
+ no synchronization
+ exit-address-family
+!         
+ip route 10.7.0.0 255.255.255.0 128.11.0.66
+ip route 172.16.0.0 255.255.255.0 128.11.0.66
+!
+!
+ip http server
+no ip http secure-server
+!
+ipv6 router ospf 1
+ log-adjacency-changes
+!
+!
+!
+!
+!
+tftp-server flash:c2600-adventerprisek9-mz.124-9.T2.bin
+!
+control-plane
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+alias exec wr copy ru st
+alias exec ps ping ipv6
+alias exec sit show int tru
+alias exec sivib show ipv6 int brie
+alias exec sivibiu show ipv6 int brie | i up
+alias exec crs copy ru st
+alias exec sib show ip bgp
+alias exec sibb show ip bgp | begin
+alias exec sibi show ip bgp | i
+alias exec sibs show ip bgp sum
+alias exec wha show run | i alias
+alias exec srso show run | sec ospf
+alias exec srsb show run | sec bgp
+alias exec srse show run | sec eigrp
+alias exec sio show ip ospf 
+alias exec siobr show ip ospf border
+alias exec siod show ip ospf database
+alias exec l1odrs show ip ospf database router  self
+alias exec l2odn show ip ospf database network
+alias exec siib show ip int brie
+alias exec siibu show ip int brie | i up
+alias exec sion show ip ospf neighbor
+alias exec siotop show ip ospf topology
+alias exec sior show ip ospf rib
+alias exec siotra show ip ospf traffic
+alias exec so3n show ospfv3 nei
+alias exec so3d show ospfv3 database
+alias exec scn show cdp nei
+alias exec sien show ip eigrp neighbor
+alias exec siet show ip eigrp topology
+alias exec siets show ip eigrp topology summary
+alias exec sietz show ip eigrp topology zero
+alias exec sietall show ip eigrp topology all
+alias exec sietd show ip eigrp topology detail
+alias exec sietact show ip eigrp topology active
+alias exec sir show ip route
+alias exec sip show ip pro
+alias exec siei show ip eigrp interfaces
+alias exec siri show ip route | i 
+alias exec siro show ip route ospf
+alias exec sipi show ip protocol | i 
+alias exec oso show ip ospf 1 database summary self-originate | i sum
+alias exec siv show ipv6
+alias exec si6oiia show ipv6 ospf int | i Area
+alias exec si6ib show ipv6 int brie
+alias exec ccc copy ru st
+alias exec sioda show ip ospf data adv-router
+alias exec pp ping ipv
+alias exec sri show run | include
+alias exec sibn show ip bgp nei
+alias exec si6r show ipv6 route
+alias exec sbi6us show bgp ipv6 unicast sum
+alias exec sbi6un show bgp ipv6 unicast nei
+alias exec si6b show ipv6 bgp
+alias exec sbi6u show bgp ipv6 unicast
+!
+line con 0
+ exec-timeout 0 0
+ logging synchronous
+ login local
+line aux 0
+line vty 0 4
+ exec-timeout 240 0
+ login local
+line vty 5 15
+ exec-timeout 240 0
+ login local
+!
+!
+end
