@@ -5,7 +5,7 @@
 !
 !
 !
-hostname _lab_r_101
+hostname lab-device-101
 !
 boot-start-marker
 boot-end-marker
